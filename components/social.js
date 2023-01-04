@@ -3,7 +3,7 @@ import { createClient } from "next-sanity";
 
 const Social = ({ profile }) => {
   return (
-    <>
+    <div>
       <a
         href={profile.person.githubLink}
         target="_blank"
@@ -51,7 +51,7 @@ const Social = ({ profile }) => {
       >
         <i className="bx bxl-medium text-2xl text-primary cursor-pointer pl-2 hover:text-yellow"></i>
       </a>
-    </>
+    </div>
   );
 };
 export default Social;

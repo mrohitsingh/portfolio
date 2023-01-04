@@ -50,7 +50,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
                           <i className="bx bx-chevron-right text-3xl text-yellow"></i>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between pt-5 pl-2 sm:justify-start sm:pt-0">
+                      <div className="flex flex-row  items-center justify-between pt-5 pl-2 sm:justify-start sm:pt-0">
                         <Social profile={profile} />
                       </div>
                     </div>
