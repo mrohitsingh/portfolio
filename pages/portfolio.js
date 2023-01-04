@@ -1,8 +1,18 @@
 import React from "react";
 import Link from "next/link";
+import { createClient } from "next-sanity";
+import imageUrlBuilder from "@sanity/image-url";
 import Testimonial from "./../components/Testimonial";
 
-const Portfolio = () => {
+const Portfolio = ({ portfolio }) => {
+  const client = createClient({
+    projectId: "fgjlw1up",
+    dataset: "production",
+    useCdn: false,
+  });
+
+  const builder = imageUrlBuilder(client);
+  
   return (
     <div id="main" className="relative">
       <div className="container py-16 md:py-20" id="portfolio">
@@ -19,56 +29,21 @@ const Portfolio = () => {
         </h5>
 
         <div className="mx-auto grid w-full grid-cols-1 gap-8 pt-12 sm:w-3/4 md:gap-10 lg:w-full lg:grid-cols-2">
-          <Link
-            href="/"
-            className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-          >
-            <img
-              src="/assets/img/image_finder_live.png"
-              className="w-full shadow"
-              alt="portfolio image"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-          >
-            <img
-              src="/assets/img/movie_hunter.png"
-              className="w-full shadow"
-              alt="portfolio image"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-          >
-            <img
-              src="/assets/img/todo_list.png"
-              className="w-full shadow"
-              alt="portfolio image"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-          >
-            <img
-              src="/assets/img/unsplace.png"
-              className="w-full shadow"
-              alt="portfolio image"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-          >
-            <img
-              src="/assets/img/world_rank.png"
-              className="w-full shadow"
-              alt="portfolio image"
-            />
-          </Link>
+          {portfolio.map((item, id) => {
+            return (
+              <Link
+                key={id}
+                href="/"
+                className="mx-auto transform transition-all hover:scale-105 md:mx-0"
+              >
+                <img
+                  src={builder.image(item.image).url()}
+                  className="w-full shadow"
+                  alt="portfolio image"
+                />
+              </Link>
+            );
+          })}
         </div>
 
         <Testimonial />
@@ -78,3 +53,18 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
+export async function getServerSideProps(context) {
+  const client = createClient({
+    projectId: "fgjlw1up",
+    dataset: "production",
+    useCdn: false,
+  });
+
+  const portfolioQuery = `*[_type == "portfolio"]`;
+  const portfolio = await client.fetch(portfolioQuery);
+
+  return {
+    props: { portfolio },
+  };
+}
