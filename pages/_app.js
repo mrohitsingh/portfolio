@@ -14,6 +14,19 @@ export default function App({ Component, pageProps }) {
 
       <Script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" />
 
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-3V9B9MJ5K8"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-3V9B9MJ5K8');
+        `}
+      </Script>
       <Header />
       <Component {...pageProps} />
       <Footer />

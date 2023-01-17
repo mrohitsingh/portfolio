@@ -44,6 +44,10 @@ const Post = ({ blog, profile }) => {
 
   return (
     <>
+      <Head>
+        <title>{blog.title}</title>
+      </Head>
+
       <div id="main" className="relative">
         <div>
           <div>
@@ -289,7 +293,6 @@ export const getServerSideProps = async (context) => {
     "categories": categories[]->name,
     "authorAbout": author.author->about,
     "comments": *[_type == "comment" && blog._ref == ^._id && approved == true] | order(_createdAt desc),
-
     "previousPost": *[_type == "blog" && _id < ^._id][0]{
       "slug": slug.current
       },

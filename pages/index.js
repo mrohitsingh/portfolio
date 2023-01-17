@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from "next/head";
 import { createClient } from "next-sanity";
 import PortableText from "react-portable-text";
 import imageUrlBuilder from "@sanity/image-url";
@@ -18,6 +19,9 @@ export default function Home({ blogs, profile, services, portfolio }) {
 
   return (
     <>
+      <Head>
+        <title>Rohit Singh</title>
+      </Head>
       <div id="main" className="relative">
         <div>
           <div>
@@ -415,7 +419,6 @@ export default function Home({ blogs, profile, services, portfolio }) {
               </div>
             </div>
             <Contact />
-
           </div>
         </div>
       </div>

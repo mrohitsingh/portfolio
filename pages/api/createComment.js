@@ -25,11 +25,8 @@ export default async function createComment(req, res) {
       comment,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
   }
-
-  console.log("Comment submitted successfully");
 
   res.status(200).json({ message: "Comment submitted successfully" });
 }

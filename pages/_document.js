@@ -13,8 +13,6 @@ export default function Document() {
           name="viewport"
         />
 
-        <title>Rohit Singh</title>
-
         <meta property="og:title" content="Homepage | Rohit Singh" />
 
         <meta property="og:locale" content="en_US" />
