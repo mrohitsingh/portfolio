@@ -9,14 +9,15 @@ const Contact = () => {
           Here's a contact form
         </h2>
         <h4 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-          Have Any Questions?
+          Let's build something amazing together!!
         </h4>
         <div className="mx-auto w-full pt-5 text-center sm:w-2/3 lg:pt-6">
           <p className="font-body text-grey-10">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit hendrerit
-            condimentum turpis nisl sem, viverra habitasse urna ante lobortis
-            fermentum accumsan. Viverra habitasse urna ante lobortis fermentum
-            accumsan.
+            I specialize in creating custom solutions for businesses of all
+            sizes. Whether you need a new website, mobile app, or software
+            development, I have the skills and knowledge to deliver outstanding
+            results. Contact me now to schedule a consultation and let's discuss
+            how I can help you achieve your goals.
           </p>
         </div>
         <form className="mx-auto w-full pt-10 sm:w-3/4">
@@ -70,7 +71,10 @@ const Contact = () => {
                 My Email
               </p>
             </div>
-            <Link href="mailto:nrohitsingh77@gmail.com" className="pt-2 text-left font-body font-bold text-primary lg:text-lg">
+            <Link
+              href="mailto:nrohitsingh77@gmail.com"
+              className="pt-2 text-left font-body font-bold text-primary lg:text-lg"
+            >
               nrohitsingh77@gmail.com
             </Link>
           </div>

@@ -1,6 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
-export default function Document() {
+export default function Document({ title }) {
   return (
     <Html lang="en">
       <Head>
@@ -13,27 +13,46 @@ export default function Document() {
           name="viewport"
         />
 
-        <meta property="og:title" content="Homepage | Rohit Singh" />
-
-        <meta property="og:locale" content="en_US" />
-
-        <link rel="canonical" href="/" />
-
-        <meta property="og:url" content="//" />
-
-        <meta name="description" content="Rohit Singh." />
-
-        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+        <title>{title}</title>
 
         <meta name="theme-color" content="#5540af" />
 
+        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+
+        <meta
+          name="keywords"
+          content="mrohitsingh, rohit singh, m_rohitsingh, frontend developer, coder, portfolio, freelancer, blogger, graphic designer, Rohit Singh, rohitsingh.co, @mrohitsingh, rohitsingh.code, frontend developer in india, freelancer in india, blogger in india, Rohit Singh"
+        />
+
+        <link rel="canonical" href="https://www.rohitsingh.co/" />
+
+        <meta property="og:title" content="Rohit Singh" />
+
+        <meta property="og:locale" content="en_US" />
+
+        <meta property="og:url" content="https://www.rohitsingh.co/" />
+
+        <meta
+          name="description"
+          content="I am Rohit Singh a front-end developer, graphics designer, blogger and freelancer"
+        />
+
         <meta property="og:site_name" content="Rohit Singh" />
 
-        <meta property="og:image" content="/assets/img/social.jpg" />
+        <meta property="og:image" content="/assets/img/social.png" />
 
         <meta name="twitter:card" content="summary_large_image" />
 
-        <meta name="twitter:site" content="@tailwindmade" />
+        <meta name="twitter:site" content="@m_rohitsingh" />
+
+        <meta name="twitter:title" content="Rohit Singh" />
+
+        <meta
+          name="twitter:description"
+          content="I am Rohit Singh a front-end developer, graphics designer, blogger and freelancer"
+        />
+
+        <meta name="twitter:image" content="/assets/img/social.png" />
 
         <link
           crossOrigin="crossorigin"

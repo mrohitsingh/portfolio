@@ -2,12 +2,13 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { createClient } from "next-sanity";
 import Head from "next/head";
-import PortableText from "react-portable-text";
+import BlockContent from "@sanity/block-content-to-react";
 import Navbar from "./../../components/Navbar";
 import Footer from "./../../components/Footer";
 import imageUrlBuilder from "@sanity/image-url";
 import Social from "./../../components/social";
 import { useForm, SubmitHandler } from "react-hook-form";
+import CodeBlock from "./../../components/Codeblock";
 
 const Post = ({ blog, profile }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -42,10 +43,78 @@ const Post = ({ blog, profile }) => {
       });
   };
 
+  const serializers = {
+    types: {
+      h1: (props) => <h1 style={{ color: "red" }} {...props} />,
+      li: ({ children }) => <li className="special-list-item">{children}</li>,
+      code: (props) => (
+        <pre data-language={props.node.language}>
+          <code>{props.node.code}</code>
+        </pre>
+      ),
+
+      codeBlock: (props) => (
+        <CodeBlock
+          code={props.node.code}
+          language={props.node.language}
+          {...props}
+        />
+      ),
+    },
+  };
+
   return (
     <>
       <Head>
+        <meta charSet="utf-8" />
+
+        <meta content="IE=edge,chrome=1" httpEquiv="X-UA-Compatible" />
+
+        <meta
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          name="viewport"
+        />
+
         <title>{blog.title}</title>
+
+        <meta name="theme-color" content="#5540af" />
+
+        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+
+        <meta
+          name="keywords"
+          content="mrohitsingh, rohit singh, m_rohitsingh, frontend developer, coder, portfolio, freelancer, blogger, graphic designer, Rohit Singh, rohitsingh.co, @mrohitsingh, rohitsingh.code, frontend developer in india, freelancer in india, blogger in india, Rohit Singh"
+        />
+
+        <link rel="canonical" href="https://www.rohitsingh.co/" />
+
+        <meta property="og:title" content="Rohit Singh" />
+
+        <meta property="og:locale" content="en_US" />
+
+        <meta property="og:url" content="https://www.rohitsingh.co/" />
+
+        <meta
+          name="description"
+          content="I am Rohit Singh a front-end developer, graphics designer, blogger and freelancer"
+        />
+
+        <meta property="og:site_name" content="Rohit Singh" />
+
+        <meta property="og:image" content="/assets/img/social.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <meta name="twitter:site" content="@m_rohitsingh" />
+
+        <meta name="twitter:title" content="Rohit Singh" />
+
+        <meta
+          name="twitter:description"
+          content="I am Rohit Singh a front-end developer, graphics designer, blogger and freelancer"
+        />
+
+        <meta name="twitter:image" content="/assets/img/social.png" />
       </Head>
 
       <div id="main" className="relative">
@@ -79,20 +148,35 @@ const Post = ({ blog, profile }) => {
                   </span>
                 </div>
                 <div className="prose max-w-none text-lg px-3">
-                  <PortableText
+                  <BlockContent
                     // Pass in block content straight from Sanity.io
-                    content={blog.content}
+                    blocks={blog.content}
                     projectId="fgjlw1up"
                     dataset="production"
                     // Optionally override marks, decorators, blocks, etc. in a flat
                     // structure without doing any gymnastics
-                    serializers={{
-                      h1: (props) => <h1 style={{ color: "red" }} {...props} />,
-                      li: ({ children }) => (
-                        <li className="special-list-item">{children}</li>
-                      ),
-                    }}
+                    serializers={serializers}
                   />
+                  {/* {
+                      {
+                        h1: (props) => <h1 style={{ color: "red" }} {...props} />,
+                        li: ({ children }) => (
+                          <li className="special-list-item">{children}</li>
+                        ),
+                        code: (props) => {
+                          console.log("Testing", props);
+                          return <pre>{props.children}</pre>;
+                        },
+                        codeBlock: (props) => {
+                          return (
+                            <CodeBlock
+                              code={props.code}
+                              language={props.language}
+                            />
+                          );
+                        },
+                      }
+                    } */}
                 </div>
                 {/* categories */}
                 {blog.categories && blog.categories.length > 0 && (

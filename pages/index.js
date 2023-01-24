@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Head from "next/head";
 import { createClient } from "next-sanity";
-import PortableText from "react-portable-text";
 import imageUrlBuilder from "@sanity/image-url";
 import { useEffect } from "react";
 import Social from "./../components/social";
@@ -116,13 +115,13 @@ export default function Home({ blogs, profile, services, portfolio }) {
                         Python
                       </h4>
                       <h3 className="font-body text-3xl font-bold text-primary">
-                        70%
+                        55%
                       </h3>
                     </div>
                     <div className="mt-2 h-3 w-full rounded-full bg-lila">
                       <div
                         className="h-3 rounded-full bg-primary"
-                        style={{ width: "70%" }}
+                        style={{ width: "55%" }}
                       ></div>
                     </div>
                   </div>
@@ -132,13 +131,13 @@ export default function Home({ blogs, profile, services, portfolio }) {
                         Javascript
                       </h4>
                       <h3 className="font-body text-3xl font-bold text-primary">
-                        98%
+                        65%
                       </h3>
                     </div>
                     <div className="mt-2 h-3 w-full rounded-full bg-lila">
                       <div
                         className="h-3 rounded-full bg-primary"
-                        style={{ width: "98%" }}
+                        style={{ width: "65%" }}
                       ></div>
                     </div>
                   </div>
@@ -148,13 +147,13 @@ export default function Home({ blogs, profile, services, portfolio }) {
                         Figma
                       </h4>
                       <h3 className="font-body text-3xl font-bold text-primary">
-                        91%
+                        60%
                       </h3>
                     </div>
                     <div className="mt-2 h-3 w-full rounded-full bg-lila">
                       <div
                         className="h-3 rounded-full bg-primary"
-                        style={{ width: "91%" }}
+                        style={{ width: "60%" }}
                       ></div>
                     </div>
                   </div>
@@ -236,7 +235,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
                   <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
                     My latest clients
                   </h2>
-                  <div className="flex flex-wrap items-center justify-center pt-4 sm:pt-4">
+                  <div className="flex flex-nowrap items-center justify-center pt-4 sm:pt-4">
                     <span className="m-8 block">
                       <img
                         src="/assets/img/logo-coca-cola.svg"
@@ -287,76 +286,76 @@ export default function Home({ blogs, profile, services, portfolio }) {
               }}
               id="statistics"
             >
-              <div className="container">
-                <div className="mx-auto w-5/6 bg-white py-16 shadow md:w-11/12 lg:py-20 xl:py-24 2xl:w-full">
-                  <div className="grid grid-cols-2 gap-5 md:gap-8 xl:grid-cols-4 xl:gap-5">
-                    <div className="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
+              <div class="container">
+                <div class="mx-auto w-5/6 bg-white py-16 shadow md:w-11/12 lg:py-20 xl:py-24 2xl:w-full">
+                  <div class="grid grid-cols-2 gap-5 md:gap-8 xl:grid-cols-4 xl:gap-5">
+                    <div class="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
                       <div>
                         <img
-                          src="/assets/img/icon-project.svg"
-                          className="mx-auto h-12 w-auto md:h-20"
+                          src="./assets/img/icon-project.svg"
+                          class="mx-auto h-12 w-auto md:h-20"
                           alt="icon project"
                         />
                       </div>
-                      <div className="pt-5 md:pl-5 md:pt-0">
-                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div class="pt-5 md:pl-5 md:pt-0">
+                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
                           12
                         </h1>
-                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Finished Projects
                         </h4>
                       </div>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
+                    <div class="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
                       <div>
                         <img
-                          src="/assets/img/icon-award.svg"
-                          className="mx-auto h-12 w-auto md:h-20"
+                          src="./assets/img/icon-award.svg"
+                          class="mx-auto h-12 w-auto md:h-20"
                           alt="icon award"
                         />
                       </div>
-                      <div className="pt-5 md:pl-5 md:pt-0">
-                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div class="pt-5 md:pl-5 md:pt-0">
+                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
                           3
                         </h1>
-                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Awards Won
                         </h4>
                       </div>
                     </div>
 
-                    <div className="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
+                    <div class="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
                       <div>
                         <img
-                          src="/assets/img/icon-happy.svg"
-                          className="mx-auto h-12 w-auto md:h-20"
+                          src="./assets/img/icon-happy.svg"
+                          class="mx-auto h-12 w-auto md:h-20"
                           alt="icon happy clients"
                         />
                       </div>
-                      <div className="pt-5 md:pl-5 md:pt-0">
-                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div class="pt-5 md:pl-5 md:pt-0">
+                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
                           8
                         </h1>
-                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Happy Clients
                         </h4>
                       </div>
                     </div>
 
-                    <div className="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
+                    <div class="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
                       <div>
                         <img
-                          src="/assets/img/icon-puzzle.svg"
-                          className="mx-auto h-12 w-auto md:h-20"
+                          src="./assets/img/icon-puzzle.svg"
+                          class="mx-auto h-12 w-auto md:h-20"
                           alt="icon puzzle"
                         />
                       </div>
-                      <div className="pt-5 md:pl-5 md:pt-0">
-                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div class="pt-5 md:pl-5 md:pt-0">
+                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
                           99
                         </h1>
-                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Bugs Fixed
                         </h4>
                       </div>

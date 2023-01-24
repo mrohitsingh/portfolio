@@ -5,7 +5,6 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import { createClient } from "next-sanity";
 import { useEffect } from "react";
-import PortableText from "react-portable-text";
 import imageUrlBuilder from "@sanity/image-url";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -21,6 +20,9 @@ const Blogs = ({ blogs }) => {
 
   return (
     <>
+      <Head>
+        <title>Blogs | Rohit Singh </title>
+      </Head>
       <div id="main" className="relative">
         <div>
           <div className="bg-grey-50" id="blog">

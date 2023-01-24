@@ -5,16 +5,18 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <div className="fixed w-full z-50 top-0 py-3 sm:py-5 bg-gradient-to-r from-hero-gradient-from to-hero-gradient-to">
+      <div className="fixed w-full z-50 top-0 py-2 sm:py-3 bg-gradient-to-r from-hero-gradient-from to-hero-gradient-to">
         <div className="container md:flex items-center justify-between">
           <div>
             <span className="cursor-pointer text-2xl font-bold uppercase text-white hover:text-yellow">
-              <Link href="/">Rohit Singh</Link>
+              <Link href="/">
+                <img src="/assets/img/rs.png" className="w-10 lg:w-14" alt="" />
+              </Link>
             </span>
           </div>
           <div
             onClick={() => setOpen(!open)}
-            className="text-4xl text-white absolute right-8 top-6 cursor-pointer md:hidden"
+            className="text-4xl text-white absolute right-8 top-0 cursor-pointer md:hidden"
           >
             <i className={open ? "bx bx-x" : "bx bx-menu"}></i>
           </div>
