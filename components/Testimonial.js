@@ -1,14 +1,8 @@
 import React from "react";
-import { createClient } from "next-sanity";
+import { client } from "./../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
 const Testimonial = ({ testimonial }) => {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const builder = imageUrlBuilder(client);
   console.log(testimonial);
 
@@ -65,12 +59,6 @@ const Testimonial = ({ testimonial }) => {
 export default Testimonial;
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const testimonialQuery = `*[_type == "testimonial"]`;
   const testimonial = await client.fetch(testimonialQuery);
 

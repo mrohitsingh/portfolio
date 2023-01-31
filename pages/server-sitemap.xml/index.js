@@ -1,9 +1,9 @@
 import { getServerSideSitemap } from "next-sitemap";
 
-const siteUrl = "http://localhost:3000/";
+const siteUrl = "https://rohitsingh.co/";
 
 export const getServerSideProps = async (ctx) => {
-  const blogs = await fetch("http://localhost:3000/blogs");
+  const blogs = await fetch("https://rohitsingh.co/blogs");
   const blogsJson = await blogs.json();
   const blogsSitemaps = blogsJson.map((item) => ({
     loc: `${siteUrl}${item.id.toString()}`,
@@ -16,14 +16,3 @@ export const getServerSideProps = async (ctx) => {
 };
 
 export default function Site() {}
-
-// let posts = await fetch("https://rohitsingh.co/blogs");
-// posts = await posts.json();
-// const newsSitemaps = posts.map((item) => ({
-//   loc: `${siteUrl} ${item.id.toString()}`,
-//   lastmod: new Date().toISOString(),
-// }));
-
-// const fields = [...newsSitemaps];
-
-// return getServerSideSitemap(ctx, fields);

@@ -1,14 +1,8 @@
 import React from "react";
-import { createClient } from "next-sanity";
+import { client } from "./../../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
 const Services = ({ services }) => {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const builder = imageUrlBuilder(client);
 
   return (
@@ -65,12 +59,6 @@ const Services = ({ services }) => {
 export default Services;
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const servicesQuery = `*[_type == "services"]`;
   const services = await client.fetch(servicesQuery);
 

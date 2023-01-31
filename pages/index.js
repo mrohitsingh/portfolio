@@ -1,19 +1,14 @@
 import Link from "next/link";
 import Head from "next/head";
-import { createClient } from "next-sanity";
+import { client } from "./../../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import { useEffect } from "react";
 import Social from "./../components/social";
 import Contact from "./contact";
 import Portfolio from "./portfolio";
+import "./../styles/Home.module.css";
 
 export default function Home({ blogs, profile, services, portfolio }) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const builder = imageUrlBuilder(client);
 
   return (
@@ -53,15 +48,9 @@ export default function Home({ blogs, profile, services, portfolio }) {
                           <i className="bx bx-chevron-right text-3xl text-yellow"></i>
                         </div>
                       </div>
-                      <div className="flex flex-row  items-center justify-between pt-5 pl-2 sm:justify-start sm:pt-0">
-                        <Social profile={profile} />
+                      <div className="flex flex-row text-white items-center justify-between pt-5 pl-2 sm:justify-start sm:pt-0">
+                        <Social className="text-white" profile={profile} />
                       </div>
-                    </div>
-                    <div className="group pt-3">
-                      <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                        <Link href={"/blogs"}>All Blogs</Link>
-                      </span>
-                      <span className="block h-0.5 w-24 bg-transparent group-hover:bg-yellow"></span>
                     </div>
                   </div>
                 </div>
@@ -211,22 +200,24 @@ export default function Home({ blogs, profile, services, portfolio }) {
               </div>
             </div>
 
-            <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 px-10 sm:w-3/4 md:gap-10 lg:w-full lg:grid-cols-2">
-              {portfolio.map((item, id) => {
-                return (
-                  <Link
-                    key={id}
-                    href="/"
-                    className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-                  >
-                    <img
-                      src={builder.image(item.image).url()}
-                      className="w-full shadow"
-                      alt="portfolio image"
-                    />
-                  </Link>
-                );
-              })}
+            <div className="container">
+              <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 px-10 sm:w-3/4 md:gap-10 lg:w-full lg:grid-cols-2">
+                {portfolio.map((item, id) => {
+                  return (
+                    <Link
+                      key={id}
+                      href="/"
+                      className="mx-auto transform transition-all hover:scale-105 md:mx-0"
+                    >
+                      <img
+                        src={builder.image(item.image).url()}
+                        className="w-full shadow"
+                        alt="portfolio image"
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="bg-grey-50" id="clients">
@@ -286,76 +277,76 @@ export default function Home({ blogs, profile, services, portfolio }) {
               }}
               id="statistics"
             >
-              <div class="container">
-                <div class="mx-auto w-5/6 bg-white py-16 shadow md:w-11/12 lg:py-20 xl:py-24 2xl:w-full">
-                  <div class="grid grid-cols-2 gap-5 md:gap-8 xl:grid-cols-4 xl:gap-5">
-                    <div class="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
+              <div className="container">
+                <div className="mx-auto w-5/6 bg-white py-16 shadow md:w-11/12 lg:py-20 xl:py-24 2xl:w-full">
+                  <div className="grid grid-cols-2 gap-5 md:gap-8 xl:grid-cols-4 xl:gap-5">
+                    <div className="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
                       <div>
                         <img
                           src="./assets/img/icon-project.svg"
-                          class="mx-auto h-12 w-auto md:h-20"
+                          className="mx-auto h-12 w-auto md:h-20"
                           alt="icon project"
                         />
                       </div>
-                      <div class="pt-5 md:pl-5 md:pt-0">
-                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div className="pt-5 md:pl-5 md:pt-0">
+                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
                           12
                         </h1>
-                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Finished Projects
                         </h4>
                       </div>
                     </div>
 
-                    <div class="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
+                    <div className="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
                       <div>
                         <img
                           src="./assets/img/icon-award.svg"
-                          class="mx-auto h-12 w-auto md:h-20"
+                          className="mx-auto h-12 w-auto md:h-20"
                           alt="icon award"
                         />
                       </div>
-                      <div class="pt-5 md:pl-5 md:pt-0">
-                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div className="pt-5 md:pl-5 md:pt-0">
+                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
                           3
                         </h1>
-                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Awards Won
                         </h4>
                       </div>
                     </div>
 
-                    <div class="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
+                    <div className="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
                       <div>
                         <img
                           src="./assets/img/icon-happy.svg"
-                          class="mx-auto h-12 w-auto md:h-20"
+                          className="mx-auto h-12 w-auto md:h-20"
                           alt="icon happy clients"
                         />
                       </div>
-                      <div class="pt-5 md:pl-5 md:pt-0">
-                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div className="pt-5 md:pl-5 md:pt-0">
+                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
                           8
                         </h1>
-                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Happy Clients
                         </h4>
                       </div>
                     </div>
 
-                    <div class="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
+                    <div className="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
                       <div>
                         <img
                           src="./assets/img/icon-puzzle.svg"
-                          class="mx-auto h-12 w-auto md:h-20"
+                          className="mx-auto h-12 w-auto md:h-20"
                           alt="icon puzzle"
                         />
                       </div>
-                      <div class="pt-5 md:pl-5 md:pt-0">
-                        <h1 class="font-body text-2xl font-bold text-primary md:text-4xl">
+                      <div className="pt-5 md:pl-5 md:pt-0">
+                        <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
                           99
                         </h1>
-                        <h4 class="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
+                        <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
                           Bugs Fixed
                         </h4>
                       </div>
@@ -367,7 +358,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
 
             <div className="bg-grey-50" id="blog">
               <div className="container py-16 md:py-20">
-                <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
+                <h2 className="text-center font-header text-3xl font-semibold uppercase text-primary sm:text-2xl lg:text-4xl">
                   I also like to write
                 </h2>
                 <h4 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
@@ -384,7 +375,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
                               "/assets/img/post-01.png"
                             })`,
                           }}
-                          className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72 rounded-t-2xl"
+                          className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-54 xl:h-72 rounded-t-2xl"
                         >
                           <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50 rounded-t-2xl"></span>
                           <Link
@@ -392,7 +383,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
                             href={"/blog/" + item.slug.current}
                             className="shadow"
                           >
-                            <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-purple-700 bg-purple-700 px-6 py-2 text-center font-body text-sm font-bold uppercase text-purple-200 md:text-base cursor-pointer hover:bg-purple-200 hover:border-purple-700 hover:text-purple-700">
+                            <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-primary bg-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-primary md:text-base cursor-pointer hover:bg-primary hover:border-white hover:text-white">
                               Read More
                             </span>
                           </Link>
@@ -403,11 +394,11 @@ export default function Home({ blogs, profile, services, portfolio }) {
                             href={"/blog/" + item.slug.current}
                             className="shadow"
                           >
-                            <span className="block font-body text-lg font-semibold text-black cursor-pointer hover:text-purple-700">
+                            <span className="block font-body text-lg font-semibold text-black cursor-pointer hover:text-primary">
                               {item.title}
                             </span>
                           </Link>
-                          <span className="block pt-2 font-body text-grey-20">
+                          <span className="block pt-2 font-body text-grey-20 line-clamp-3">
                             {item.metadesc}
                           </span>
                         </div>
@@ -426,12 +417,6 @@ export default function Home({ blogs, profile, services, portfolio }) {
 }
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const query = `*[_type == "blog"] | order(_createdAt desc)[0..2]`;
   const blogs = await client.fetch(query);
 

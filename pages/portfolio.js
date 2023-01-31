@@ -1,17 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { createClient } from "next-sanity";
+import { client } from "./../../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Testimonial from "./../components/Testimonial";
 import Head from "next/head";
 
 const Portfolio = ({ portfolio, testimonial }) => {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const builder = imageUrlBuilder(client);
 
   return (
@@ -61,12 +55,6 @@ const Portfolio = ({ portfolio, testimonial }) => {
 export default Portfolio;
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const portfolioQuery = `*[_type == "portfolio"]`;
   const portfolio = await client.fetch(portfolioQuery);
 

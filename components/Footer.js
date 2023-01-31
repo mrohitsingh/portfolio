@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { createClient } from "next-sanity";
+import { client } from "./../lib/sanity";
 import { useEffect } from "react";
 import Social from "./social";
 
@@ -25,12 +25,6 @@ const Footer = ({ profile }) => {
 export default Footer;
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const profileQuery = `*[_type == "profile"][0]`;
   const profile = await client.fetch(profileQuery);
 

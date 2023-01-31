@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { createClient } from "next-sanity";
+import React, { useState, useEffect } from "react";
+import { client } from "./../../lib/sanity";
 import Head from "next/head";
 import BlockContent from "@sanity/block-content-to-react";
 import Navbar from "./../../components/Navbar";
@@ -10,8 +10,10 @@ import Social from "./../../components/social";
 import { useForm, SubmitHandler } from "react-hook-form";
 import CodeBlock from "./../../components/Codeblock";
 
-const Post = ({ blog, profile }) => {
+const Blog = ({ blog, profile }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [scroll, setScroll] = useState(0);
+
   const router = useRouter();
   const {
     register,
@@ -20,12 +22,6 @@ const Post = ({ blog, profile }) => {
   } = useForm();
 
   const { slug } = router.query;
-
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
 
   const builder = imageUrlBuilder(client);
 
@@ -42,8 +38,21 @@ const Post = ({ blog, profile }) => {
         setSubmitted(false);
       });
   };
+  const link = (props) => {
+    return (
+      <a
+        className="no-underline relative before:content-[''] before:bg-primary before:absolute before:left-0 before:bottom-0 before:w-full	before:h-2 before:-z-1 before:transition-all before:ease-in-out before:duration-500 hover:before:bottom-0 hover:before:h-full hover:before:w-full hover:text-white"
+        href={props.mark.href}
+      >
+        {props.children}
+      </a>
+    );
+  };
 
   const serializers = {
+    marks: {
+      link,
+    },
     types: {
       h1: (props) => <h1 style={{ color: "red" }} {...props} />,
       li: ({ children }) => <li className="special-list-item">{children}</li>,
@@ -62,6 +71,22 @@ const Post = ({ blog, profile }) => {
       ),
     },
   };
+
+  useEffect(() => {
+    let progressBarHandler = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scroll = `${totalScroll / windowHeight}`;
+
+      setScroll(scroll);
+    };
+
+    window.addEventListener("scroll", progressBarHandler);
+
+    return () => window.removeEventListener("scroll", progressBarHandler);
+  });
 
   return (
     <>
@@ -120,6 +145,15 @@ const Post = ({ blog, profile }) => {
       <div id="main" className="relative">
         <div>
           <div>
+            <div id="progressBarContainer">
+              <div
+                id="progressBar"
+                style={{
+                  transform: `scale(${scroll}, 0.2)`,
+                  opacity: 1,
+                }}
+              ></div>
+            </div>
             <div className="container py-6 md:py-10">
               <div className="mx-auto max-w-4xl">
                 <div className="">
@@ -149,34 +183,11 @@ const Post = ({ blog, profile }) => {
                 </div>
                 <div className="prose max-w-none text-lg px-3">
                   <BlockContent
-                    // Pass in block content straight from Sanity.io
                     blocks={blog.content}
                     projectId="fgjlw1up"
                     dataset="production"
-                    // Optionally override marks, decorators, blocks, etc. in a flat
-                    // structure without doing any gymnastics
                     serializers={serializers}
                   />
-                  {/* {
-                      {
-                        h1: (props) => <h1 style={{ color: "red" }} {...props} />,
-                        li: ({ children }) => (
-                          <li className="special-list-item">{children}</li>
-                        ),
-                        code: (props) => {
-                          console.log("Testing", props);
-                          return <pre>{props.children}</pre>;
-                        },
-                        codeBlock: (props) => {
-                          return (
-                            <CodeBlock
-                              code={props.code}
-                              language={props.language}
-                            />
-                          );
-                        },
-                      }
-                    } */}
                 </div>
                 {/* categories */}
                 {blog.categories && blog.categories.length > 0 && (
@@ -356,15 +367,11 @@ const Post = ({ blog, profile }) => {
   );
 };
 
-export default Post;
+export default Blog;
 
 export const getServerSideProps = async (context) => {
   const { slug } = context.query;
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
+
   const query = `*[_type == "blog" && slug.current == '${slug}'][0]
   {
     _id,

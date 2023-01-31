@@ -4,7 +4,7 @@ import Link from "next/link";
 const Header = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div className="">
       <div className="fixed w-full z-50 top-0 py-2 sm:py-3 bg-gradient-to-r from-hero-gradient-from to-hero-gradient-to">
         <div className="container md:flex items-center justify-between">
           <div>

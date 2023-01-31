@@ -3,25 +3,17 @@ import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import { createClient } from "next-sanity";
+import { client } from "./../../lib/sanity";
 import { useEffect } from "react";
 import imageUrlBuilder from "@sanity/image-url";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const Blogs = ({ blogs }) => {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const builder = imageUrlBuilder(client);
 
   return (
     <>
       <Head>
-        <title>Blogs | Rohit Singh </title>
+        <title>Blogs ~ Rohit Singh </title>
       </Head>
       <div id="main" className="relative">
         <div>
@@ -49,13 +41,13 @@ const Blogs = ({ blogs }) => {
                           href={"/blog/" + blog.slug.current}
                           className="shadow"
                         >
-                          <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-purple-700 bg-purple-700 px-6 py-2 text-center font-body text-sm font-bold uppercase text-purple-200 md:text-base cursor-pointer hover:bg-purple-200 hover:border-purple-700 hover:text-purple-700">
+                          <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-primary bg-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-primary md:text-base cursor-pointer hover:bg-primary hover:border-white hover:text-white">
                             Read More
                           </span>
                         </Link>
                       </div>
                       <div className="bg-white py-6 px-5 xl:py-8 rounded-b-2xl">
-                        <div className="flex items-center justify-between pb-5 md:pb-10">
+                        <div className="flex items-center justify-between pb-5">
                           <div>
                             <img
                               src={builder
@@ -80,11 +72,11 @@ const Blogs = ({ blogs }) => {
                           href={"/blog/" + blog.slug.current}
                           className="shadow"
                         >
-                          <span className="block font-body text-lg font-semibold text-black cursor-pointer hover:text-purple-700">
+                          <span className="block font-body text-lg font-semibold text-black cursor-pointer hover:text-primary">
                             {blog.title}
                           </span>
                         </Link>
-                        <span className="block pt-2 font-body text-grey-20">
+                        <span className="block pt-2 font-body text-grey-20 line-clamp-3">
                           {blog.metadesc}
                         </span>
                       </div>
@@ -103,12 +95,6 @@ const Blogs = ({ blogs }) => {
 export default Blogs;
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const blogs = await client.fetch(
     `*[_type == "blog"] | order(publishedAt desc) {
       title,

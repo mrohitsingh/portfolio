@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#progressBarContainer {
+  position: fixed;
+  z-index: 1000;
+  background: transparent;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+#progressBar {
+  background: yellow;
+  transform-origin: top left;
+  transform: scale(1);
+  opacity: 1;
+}
+
+#progressBarContainer,
+#progressBar {
+  height: 5px;
+}
+
+::selection {
+  color: #5540af;
+  background: #f9e71c;
+}
+/* FireFox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #5540af #f9e71c;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f9e71c;
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5540af;
+  border-radius: 14px;
+  border: 2px solid #5540af;
+}

@@ -1,15 +1,9 @@
 import React from "react";
-import { createClient } from "next-sanity";
+import { client } from "./../../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Social from "./../components/social";
 
 const about = ({ profile, langIcon }) => {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const builder = imageUrlBuilder(client);
 
   return (
@@ -126,12 +120,6 @@ const about = ({ profile, langIcon }) => {
 export default about;
 
 export async function getServerSideProps(context) {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const profileQuery = `*[_type == "profile"][0]
   {
     metadesc,

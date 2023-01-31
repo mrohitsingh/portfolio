@@ -1,5 +1,5 @@
 import React from "react";
-import { createClient } from "next-sanity";
+import { client } from "./../lib/sanity";
 
 const Social = ({ profile }) => {
   return (
@@ -57,12 +57,6 @@ const Social = ({ profile }) => {
 export default Social;
 
 export const getServerSideProps = async (context) => {
-  const client = createClient({
-    projectId: "fgjlw1up",
-    dataset: "production",
-    useCdn: false,
-  });
-
   const profile = await client.fetch(
     `*[_type == "profile"]{
       "person": person->{

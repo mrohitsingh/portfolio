@@ -32,9 +32,9 @@ const ScrollToTop = () => {
       <div
         onClick={topFunction}
         id="back-to-top"
-        className="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 h-9 w-9 text-center bg-indigo-600 text-white leading-9 cursor-pointer hover:bg-yellow-500"
+        className="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 h-9 w-9 text-center bg-primary text-white leading-9 cursor-pointer hover:bg-yellow hover:text-primary"
       >
-        <i className="bx bx-up-arrow-alt text-white"></i>
+        <i className="bx bx-up-arrow-alt"></i>
       </div>
     </div>
   );
