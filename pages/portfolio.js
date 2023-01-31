@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { client } from "./../../lib/sanity";
+import { client } from "./../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Testimonial from "./../components/Testimonial";
 import Head from "next/head";

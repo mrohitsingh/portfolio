@@ -3,7 +3,6 @@ import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import react, { useState } from "react";
-import styles from "../styles/Home.module.css";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);

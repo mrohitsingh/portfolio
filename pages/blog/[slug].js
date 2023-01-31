@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { client } from "./../../lib/sanity";
 import Head from "next/head";
+import Link from "next/link";
 import BlockContent from "@sanity/block-content-to-react";
 import Navbar from "./../../components/Navbar";
 import Footer from "./../../components/Footer";
@@ -38,6 +39,7 @@ const Blog = ({ blog, profile }) => {
         setSubmitted(false);
       });
   };
+
   const link = (props) => {
     return (
       <a
@@ -156,27 +158,34 @@ const Blog = ({ blog, profile }) => {
             </div>
             <div className="container py-6 md:py-10">
               <div className="mx-auto max-w-4xl">
-                <div className="">
-                  <h1 className="pt-10 font-body text-3xl font-semibold text-primary sm:text-4xl md:text-5xl xl:text-6xl">
-                    {blog.title}
-                  </h1>
-                  <div className="flex items-center pt-5 md:pt-10">
-                    <div>
-                      <img
-                        src={builder.image(blog.authorImage).width(50).url()}
-                        className="h-20 w-20 rounded-full border-2 border-grey-70 shadow"
-                        alt="author image"
-                      />
-                    </div>
-                    <div className="pl-5">
-                      <span className="block font-body text-xl font-bold text-grey-10">
-                        By {blog.authorName}
-                      </span>
-                      <span className="block pt-1 font-body text-xl font-bold text-grey-30">
-                        {blog.postedAt}
-                      </span>
+                <div className="pt-10">
+                  <div className="bg-primary text-white p-5">
+                    <h1 className="pt-5 font-body text-3xl font-semibold text-white sm:text-4xl md:text-5xl xl:text-6xl">
+                      {blog.title}
+                    </h1>
+                    <div className="flex items-center pt-5 md:pt-10">
+                      <div>
+                        <img
+                          src={builder.image(blog.authorImage).width(50).url()}
+                          className="h-20 w-20 rounded-full border-2 border-grey-70 shadow"
+                          alt="author image"
+                        />
+                      </div>
+                      <div className="pl-5">
+                        <span className="block font-body text-xl font-bold text-grey-60">
+                          By {blog.authorName}
+                        </span>
+                        <span className="block pt-1 font-body text-xl font-bold text-grey-70">
+                          {blog.postedAt}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <img
+                    src={builder.image(blog.blogImage).width(1080).url()}
+                    alt={blog.title}
+                    className=" ml-auto mr-auto w-3/5"
+                  />
                   <span className="block pt-2 font-body text-lg text-grey-20">
                     {blog.metadesc}
                   </span>
@@ -207,7 +216,7 @@ const Blog = ({ blog, profile }) => {
                 )}
 
                 <div className="mt-10 flex justify-between border-t border-lila py-12">
-                  <a
+                  <Link
                     href={"/blog/" + blog.previousPost}
                     className="flex items-center"
                   >
@@ -215,8 +224,11 @@ const Blog = ({ blog, profile }) => {
                     <span className="block pl-2 font-body text-lg font-bold uppercase text-primary md:pl-5">
                       Previous Post
                     </span>
-                  </a>
-                  <a href="/" className="flex items-center">
+                  </Link>
+                  <a
+                    href={"/blog/" + blog.nextPost}
+                    className="flex items-center"
+                  >
                     <span className="block pr-2 font-body text-lg font-bold uppercase text-primary md:pr-5">
                       Next Post
                     </span>
@@ -287,7 +299,7 @@ const Blog = ({ blog, profile }) => {
                           placeholder="Rohit Singh"
                         />
                         {errors.name && (
-                          <span className="text-red-500">Name is required</span>
+                          <span className="text-red-600">Name is required</span>
                         )}
                       </label>
 
@@ -301,7 +313,7 @@ const Blog = ({ blog, profile }) => {
                           placeholder="rohitsingh@example.com"
                         />
                         {errors.email && (
-                          <span className="text-red-500">
+                          <span className="text-red-600">
                             Email is required
                           </span>
                         )}
@@ -318,14 +330,14 @@ const Blog = ({ blog, profile }) => {
                           rows={8}
                         ></textarea>
                         {errors.comment && (
-                          <span className="text-red-500">
+                          <span className="text-red-600">
                             Comment is required
                           </span>
                         )}
                       </label>
                       <input
                         type="submit"
-                        className="mt-6 flex items-center justify-center rounded bg-indigo-600 px-8 py-3 font-header text-lg font-bold uppercase text-white hover:bg-grey-20"
+                        className="mt-6 flex w-48 items-center justify-center rounded bg-primary px-8 py-3 font-header text-lg font-bold uppercase text-white hover:bg-yellow"
                       />
                     </form>
                   </>
@@ -341,7 +353,7 @@ const Blog = ({ blog, profile }) => {
                     <hr className="border-lila my-4" />
                     {blog.comments.map((comment, _key) => (
                       <div
-                        key={comment._key}
+                        key={_key}
                         className="flex flex-col items-center pt-3 md:flex-row md:items-start xl:pb-10"
                       >
                         <div className="ml-0 flex flex-row items-baseline text-center md:ml-10 md:w-5/6 md:text-left">
@@ -376,18 +388,19 @@ export const getServerSideProps = async (context) => {
   {
     _id,
     title,
+    blogImage,
     content,
     postedAt,
     metadesc,
     "authorName": author.author->title,
     "authorImage": author.author->image.asset,
-    "categories": categories[]->name,
+    "categories": categories[]->title,
     "authorAbout": author.author->about,
     "comments": *[_type == "comment" && blog._ref == ^._id && approved == true] | order(_createdAt desc),
-    "previousPost": *[_type == "blog" && _id < ^._id][0]{
-      "slug": slug.current
+    "previousPost": *[_type == "blog" && ^.publicReleaseDate > publicReleaseDate]|order(publicReleaseDate desc)[0]{
+      "slug": slug.current,
       },
-    "nextPost": *[_type == "blog" && _id > ^._id][0]{
+    "nextPost": *[_type == "blog" && ^.publicReleaseDate > publicReleaseDate]|order(publicReleaseDate asc)[0]{
       "slug": slug.current
       },
   }`;

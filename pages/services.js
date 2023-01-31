@@ -1,5 +1,5 @@
 import React from "react";
-import { client } from "./../../lib/sanity";
+import { client } from "./../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
 const Services = ({ services }) => {

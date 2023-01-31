@@ -2,8 +2,7 @@ import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
-import { client } from "./../../lib/sanity";
+import { client } from "./../lib/sanity";
 import { useEffect } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 

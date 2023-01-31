@@ -1,12 +1,11 @@
 import Link from "next/link";
 import Head from "next/head";
-import { client } from "./../../lib/sanity";
+import { client } from "./../lib/sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import { useEffect } from "react";
 import Social from "./../components/social";
 import Contact from "./contact";
 import Portfolio from "./portfolio";
-import "./../styles/Home.module.css";
 
 export default function Home({ blogs, profile, services, portfolio }) {
   const builder = imageUrlBuilder(client);

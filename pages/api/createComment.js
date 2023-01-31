@@ -1,14 +1,13 @@
 import sanityClient from "@sanity/client";
+import { client } from "./../../lib/sanity";
 
-const config = {
-  dataset: "production",
-  projectId: "fgjlw1up",
-  useCdn: true,
-  token:
-    "skeSVWZZMz2NRrrfgIplBMFPm4Or2VfoT7zMeefpwzwY0m35FdG0OTPYKv6XvtoOGY4u3Vj8YIxmb2vMFDL1E7cWQICpZpn3iAPlxS1JXxuU2rCDn5gIJTCa42YN0px7Pm3PCUosrBRqRDiaboTCzzFg8XszxA2wlTWO5OE7DPEasZav5FxT",
-};
+// const config = {
+//   dataset: "production",
+//   projectId: "fgjlw1up",
+//   useCdn: true,
+// };
 
-const client = sanityClient(config);
+// const client = sanityClient(config);
 
 export default async function createComment(req, res) {
   const { _id, name, email, comment } = JSON.parse(req.body);
