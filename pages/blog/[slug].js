@@ -200,12 +200,12 @@ const Blog = ({ blog, profile }) => {
                 </div>
                 {/* categories */}
                 {blog.categories && blog.categories.length > 0 && (
-                  <div className="flex flex-row pt-2 pr-3">
+                  <div className="flex flex-row flex-wrap pt-2 pr-3">
                     {blog.categories.map((category, id) => (
-                      <div className="pr-10">
+                      <div className="pr-4 pb-4">
                         <a
                           href="#"
-                          className="rounded-xl bg-primary px-4 py-1 font-body font-bold text-white hover:bg-grey-20"
+                          className="rounded-xl bg-primary p-2 font-body font-bold text-white hover:bg-grey-20"
                           key={id}
                         >
                           {category}

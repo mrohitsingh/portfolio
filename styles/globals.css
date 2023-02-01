@@ -36,7 +36,11 @@
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
+/* .code-scrollbar::-webkit-scrollbar {
+  height: 5px;
+} */
 
 *::-webkit-scrollbar-track {
   background: #f9e71c;
