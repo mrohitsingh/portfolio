@@ -13,7 +13,7 @@ const CodeBlock = ({ code, language }) => {
         borderTopRightRadius: 0,
       }}
       wrapLongLines
-      className="code-scrollbar"
+      className="lg:text-[20px] sm:text-[10px]"
     >
       {code}
     </SyntaxHighlighter>

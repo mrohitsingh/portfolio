@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Script from "next/script";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
 import ScrollToTop from "./../components/ScrollToTop";
@@ -106,9 +107,15 @@ export default function App({ Component, pageProps }) {
           media="screen"
           rel="stylesheet"
         />
+
+        <meta
+          name="google-site-verification"
+          content="Zfybb8pAQU2y4hrnwFF3rG9rplGPkQ1vqf57zzl0ZDM"
+        />
       </Head>
       <Header />
       <Component {...pageProps} />
+      <Analytics />
       <Footer />
       <ScrollToTop />
     </>

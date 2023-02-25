@@ -184,7 +184,7 @@ const Blog = ({ blog, profile }) => {
                   <img
                     src={builder.image(blog.blogImage).width(1080).url()}
                     alt={blog.title}
-                    className=" ml-auto mr-auto w-3/5"
+                    className=" ml-auto mr-auto w-full pt5"
                   />
                   <span className="block pt-2 font-body text-lg text-grey-20">
                     {blog.metadesc}
