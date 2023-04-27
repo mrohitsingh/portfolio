@@ -1,6 +1,10 @@
 import "../styles/globals.css";
+import "../styles/Home.module.css";
 import Script from "next/script";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
@@ -113,6 +117,7 @@ export default function App({ Component, pageProps }) {
           content="Zfybb8pAQU2y4hrnwFF3rG9rplGPkQ1vqf57zzl0ZDM"
         />
       </Head>
+
       <Header />
       <Component {...pageProps} />
       <Analytics />

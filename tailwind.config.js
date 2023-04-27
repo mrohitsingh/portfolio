@@ -3,6 +3,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+  important: true,
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -29,10 +30,11 @@ module.exports = {
       "grey-60": "#edebf6",
       "grey-70": "#d8d8d8",
       "red-600": "#dc2626",
-      "hero-gradient-from": "rgba(85, 64, 174, 0.95)",
-      "hero-gradient-to": "rgba(65, 47, 144, 0.93)",
+      "hero-gradient-from": "#5540aef2",
+      "hero-gradient-to": "#412f90ed",
       "blog-gradient-from": "#8f9098",
       "blog-gradient-to": "#222222",
+      "green-600": "#16A34A",
     },
 
     container: {

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@next/font": "13.1.1",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^3.4.1",

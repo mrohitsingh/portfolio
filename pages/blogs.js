@@ -25,15 +25,15 @@ const Blogs = ({ blogs }) => {
                 {blogs.map((blog) => {
                   return (
                     <div key={blog.slug.current}>
-                      <div
-                        style={{
-                          backgroundImage: `url(${
+                      <div className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-54 xl:h-72 rounded-t-2xl">
+                        <img
+                          src={
                             builder.image(blog.blogImage).width(200).url() ||
                             "/assets/img/post-01.png"
-                          })`,
-                        }}
-                        className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72 rounded-t-2xl"
-                      >
+                          }
+                          alt={blog.title}
+                          className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-54 xl:h-72 rounded-t-2xl"
+                        />
                         <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50 rounded-t-2xl"></span>
                         <Link
                           key={blog.slug.current}
@@ -95,7 +95,7 @@ export default Blogs;
 
 export async function getServerSideProps(context) {
   const blogs = await client.fetch(
-    `*[_type == "blog"] | order(publishedAt desc) {
+    `*[_type == "blog"] | order(postedAt desc) {
       title,
       slug,
       metadesc,

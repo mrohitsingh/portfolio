@@ -48,7 +48,55 @@ export default function Home({ blogs, profile, services, portfolio }) {
                         </div>
                       </div>
                       <div className="flex flex-row text-white items-center justify-between pt-5 pl-2 sm:justify-start sm:pt-0">
-                        <Social className="text-white" profile={profile} />
+                        <div>
+                          <a
+                            href={profile.person.githubLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <i className="bx bxl-github text-2xl text-white cursor-pointer pl-2 hover:text-yellow"></i>
+                          </a>
+                          <a
+                            href={profile.person.linkedinLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="pl-4"
+                          >
+                            <i className="bx bxl-linkedin text-2xl text-white cursor-pointer pl-2 hover:text-yellow"></i>
+                          </a>
+                          <a
+                            href={profile.person.twitterLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="pl-4"
+                          >
+                            <i className="bx bxl-twitter text-2xl text-white cursor-pointer pl-2 hover:text-yellow"></i>
+                          </a>
+                          <a
+                            href={profile.person.facebookLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="pl-4"
+                          >
+                            <i className="bx bxl-facebook-square text-2xl text-white cursor-pointer hover:text-yellow"></i>
+                          </a>
+                          <a
+                            href={profile.person.instagramLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="pl-4"
+                          >
+                            <i className="bx bxl-instagram text-2xl text-white cursor-pointer pl-2 hover:text-yellow"></i>
+                          </a>
+                          <a
+                            href={profile.person.mediumLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="pl-4"
+                          >
+                            <i className="bx bxl-medium text-2xl text-white cursor-pointer pl-2 hover:text-yellow"></i>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -367,15 +415,15 @@ export default function Home({ blogs, profile, services, portfolio }) {
                   {blogs.map((item, id) => {
                     return (
                       <div key={id}>
-                        <div
-                          style={{
-                            backgroundImage: `url(${
-                              builder.image(item.blogImage).width(200).url() ||
+                        <div className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-54 xl:h-72 rounded-t-2xl">
+                          <img
+                            src={
+                              builder.image(item.blogImage).width(400).url() ||
                               "/assets/img/post-01.png"
-                            })`,
-                          }}
-                          className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-54 xl:h-72 rounded-t-2xl"
-                        >
+                            }
+                            alt={item.title}
+                            className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-54 xl:h-72 rounded-t-2xl"
+                          />
                           <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50 rounded-t-2xl"></span>
                           <Link
                             key={item.slug.current}
@@ -416,7 +464,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
 }
 
 export async function getServerSideProps(context) {
-  const query = `*[_type == "blog"] | order(_createdAt desc)[0..2]`;
+  const query = `*[_type == "blog"] | order(postedAt desc)[0..2]`;
   const blogs = await client.fetch(query);
 
   const profileQuery = `*[_type == "profile"][0]`;

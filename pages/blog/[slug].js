@@ -94,54 +94,46 @@ const Blog = ({ blog, profile }) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-
         <meta content="IE=edge,chrome=1" httpEquiv="X-UA-Compatible" />
-
         <meta
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
           name="viewport"
         />
-
         <title>{blog.title}</title>
-
         <meta name="theme-color" content="#5540af" />
-
         <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
-
         <meta
           name="keywords"
           content="mrohitsingh, rohit singh, m_rohitsingh, frontend developer, coder, portfolio, freelancer, blogger, graphic designer, Rohit Singh, rohitsingh.co, @mrohitsingh, rohitsingh.code, frontend developer in india, freelancer in india, blogger in india, Rohit Singh"
         />
-
         <link rel="canonical" href="https://www.rohitsingh.co/" />
-
-        <meta property="og:title" content="Rohit Singh" />
+        <meta property="og:title" content={blog.title} />
 
         <meta property="og:locale" content="en_US" />
 
-        <meta property="og:url" content="https://www.rohitsingh.co/" />
+        <meta property="og:url" content={blog.slug} />
 
-        <meta
-          name="description"
-          content="I am Rohit Singh a front-end developer, graphics designer, blogger and freelancer"
-        />
+        <meta name="description" content={blog.metadesc} />
 
         <meta property="og:site_name" content="Rohit Singh" />
 
-        <meta property="og:image" content="/assets/img/social.png" />
+        <meta
+          property="og:image"
+          content={builder.image(blog.blogImage).url()}
+        />
 
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta name="twitter:site" content="@m_rohitsingh" />
 
-        <meta name="twitter:title" content="Rohit Singh" />
+        <meta name="twitter:title" content={blog.title} />
+
+        <meta name="twitter:description" content={blog.metadesc} />
 
         <meta
-          name="twitter:description"
-          content="I am Rohit Singh a front-end developer, graphics designer, blogger and freelancer"
+          name="twitter:image"
+          content={builder.image(blog.blogImage).width(800).url()}
         />
-
-        <meta name="twitter:image" content="/assets/img/social.png" />
       </Head>
 
       <div id="main" className="relative">
@@ -160,7 +152,7 @@ const Blog = ({ blog, profile }) => {
               <div className="mx-auto max-w-4xl">
                 <div className="pt-10">
                   <div className="bg-primary text-white p-5">
-                    <h1 className="pt-5 font-body text-3xl font-semibold text-white sm:text-4xl md:text-5xl xl:text-6xl">
+                    <h1 className="pt-5 font-body text-2xl font-semibold text-white sm:text-3xl md:text-4xl xl:text-5xl">
                       {blog.title}
                     </h1>
                     <div className="flex items-center pt-5 md:pt-10">
@@ -182,7 +174,7 @@ const Blog = ({ blog, profile }) => {
                     </div>
                   </div>
                   <img
-                    src={builder.image(blog.blogImage).width(1080).url()}
+                    src={builder.image(blog.blogImage).width(800).url()}
                     alt={blog.title}
                     className=" ml-auto mr-auto w-full pt5"
                   />

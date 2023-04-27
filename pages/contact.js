@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
+  const form = useRef();
+  const [pending, setPending] = useState(false);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setPending(true);
+
+    emailjs
+      .sendForm(
+        "service_zrmpkqh",
+        "template_nbhz31t",
+        form.current,
+        "c75ZBQ9n5rJWjcHkA"
+      )
+      .then(
+        (result) => {
+          setPending(false);
+          console.log(result.text);
+          alert(
+            "I 've received your message. I'll get back to you as soon as possible."
+          );
+          form.current.reset();
+        },
+        (error) => {
+          setPending(false);
+          console.log(error.text);
+          alert("Something went wrong. Please try again later.");
+        }
+      );
+  };
   return (
     <div>
       <div className="container py-16 md:py-20" id="contact">
@@ -20,32 +51,41 @@ const Contact = () => {
             how I can help you achieve your goals.
           </p>
         </div>
-        <form className="mx-auto w-full pt-10 sm:w-3/4">
+        <form
+          ref={form}
+          onSubmit={sendEmail}
+          className="mx-auto w-full pt-10 sm:w-3/4"
+        >
           <div className="flex flex-col md:flex-row">
             <input
-              className="mr-3 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:w-1/2 lg:mr-5"
+              className="shadow border mr-3 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:w-1/2 lg:mr-5 ring-primary outline-none focus:ring-primary"
               placeholder="Name"
               type="text"
-              id="name"
+              name="name"
+              required
             />
             <input
-              className="mt-6 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:mt-0 md:ml-3 md:w-1/2 lg:ml-5"
+              className="shadow border mt-6 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:mt-0 md:ml-3 md:w-1/2 lg:ml-5 ring-primary outline-none focus:ring-primary"
+              type="email"
               placeholder="Email"
-              type="text"
-              id="email"
+              name="email"
+              required
             />
           </div>
           <textarea
-            className="mt-6 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:mt-8"
-            placeholder="Message"
-            id="message"
-            cols="30"
+            className="shadow border mt-6 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:mt-8 ring-primary outline-none focus:ring-primary"
             rows="10"
-            spellCheck="true"
+            placeholder="Message"
+            name="message"
+            required
             data-ms-editor
           ></textarea>
-          <button className="mt-6 flex items-center justify-center rounded bg-primary px-8 py-3 font-header text-lg font-bold uppercase text-white hover:bg-grey-20">
-            Send
+          <button
+            className="mt-6 flex items-center justify-center rounded bg-primary px-8 py-3 font-header text-lg font-bold uppercase text-white hover:bg-grey-20"
+            type="submit"
+            disabled={pending ? true : false}
+          >
+            <span>{pending ? "Sending..." : "Send"}</span>
             <i className="bx bx-chevron-right relative -right-2 text-3xl"></i>
           </button>
         </form>
