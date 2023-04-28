@@ -12,7 +12,7 @@ const Blogs = ({ blogs }) => {
   return (
     <>
       <Head>
-        <title>Blogs ~ Rohit Singh </title>
+        <title>Notes By ~ Rohit Singh </title>
       </Head>
       <div id="main" className="relative">
         <div>

@@ -1,16 +1,32 @@
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import "../styles/globals.css";
+import "../styles/loader.css";
 import "../styles/Home.module.css";
 import Script from "next/script";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
 import ScrollToTop from "./../components/ScrollToTop";
+import Loader from "./../components/Loader";
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+  const [pageLoading, setPageLoading] = useState(false);
+  useEffect(() => {
+    const handleStart = () => {
+      setPageLoading(true);
+    };
+    const handleComplete = () => {
+      setPageLoading(false);
+    };
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+  }, [router]);
+
   return (
     <>
       <Script
@@ -118,11 +134,19 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
 
-      <Header />
-      <Component {...pageProps} />
-      <Analytics />
-      <Footer />
-      <ScrollToTop />
+      {pageLoading ? (
+        <div>
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <Header />
+          <Component {...pageProps} />
+          <Analytics />
+          <Footer />
+          <ScrollToTop />
+        </>
+      )}
     </>
   );
 }
