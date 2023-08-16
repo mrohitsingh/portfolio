@@ -60,6 +60,7 @@ export default function App({ Component, pageProps }) {
           name="viewport"
         />
 
+<meta name="google-site-verification" content="AHx2yz-SrQCSUupLJgIUJCMOM1frV_uRhHPzZ996qzE" />
         <meta name="theme-color" content="#5540af" />
 
         <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
