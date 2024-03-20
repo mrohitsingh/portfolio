@@ -28,7 +28,7 @@ export default function Home({ blogs, profile, services, portfolio }) {
                 <div className="flex flex-col items-center justify-center lg:flex-row">
                   <div className="rounded-full border-8 border-primary shadow-xl">
                     <img
-                      src={builder.image(profile.profileImage).width(200).url()}
+                      src={builder.image(profile.profileImage).width(700).url()}
                       className="h-48 rounded-full sm:h-56"
                       alt="author"
                     />

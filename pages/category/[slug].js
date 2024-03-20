@@ -2,42 +2,33 @@ import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
-import { client } from "./../lib/sanity";
+import { client } from "../../lib/sanity";
 import { useEffect } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 
-const Blogs = ({ blogs, fetchedCategories }) => {
+const Category = ({ category, blogs }) => {
   const builder = imageUrlBuilder(client);
-
-  // console.table({ blogs });
-
+  const noOfPost = Math.min(blogs?.length || 0, 6);
   return (
     <>
       <Head>
-        <title>Notes By ~ Rohit Singh </title>
+        <title>{category.title} from ~ Rohit Singh </title>
       </Head>
       <div id="main" className="relative">
         <div>
           <div className="bg-grey-50" id="blog">
             <div className="container mx-auto py-16 md:py-20">
-              <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
-                I also like to write
+              <h2 className="text-center font-header text-3xl font-semibold text-primary sm:text-4xl lg:text-5xl pt-3">
+                {noOfPost} posts tagged with "
+                <span className="text-yellow bg-primary px-2 rounded">
+                  {category.title}
+                </span>
+                "
               </h2>
-              <div className="my-8 justify-center">
-                <ul className="ml-2 flex flex-row flex-wrap gap-1.5 justify-center items-center">
-                  {fetchedCategories?.map((category) => (
-                    <li
-                      key={category.slug.current}
-                      className="rounded-full border-2 border-primary bg-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-primary md:text-base cursor-pointer hover:bg-primary hover:border-white hover:text-white block "
-                    >
-                      <Link href={`/category/${category.slug.current}`}>
-                        {category.title} ({category.postCount})
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mx-auto grid w-full grid-cols-1 gap-6 pt-12 sm:w-3/4 md:w-full md:grid-cols-2 lg:w-full lg:grid-cols-3 xl:gap-10  rounded-3xl">
+              <h3 className="text-left font-header text-xl font-semibold text-yellow sm:text-2xl lg:text-4xl pt-12">
+                Related Posts:{" "}
+              </h3>
+              <div className="mx-auto grid w-full grid-cols-1 gap-6 pt-6 sm:w-3/4 md:w-full md:grid-cols-2 lg:w-full lg:grid-cols-3 xl:gap-10 rounded-3xl">
                 {blogs.map((blog) => {
                   return (
                     <div key={blog.slug.current}>
@@ -67,7 +58,7 @@ const Blogs = ({ blogs, fetchedCategories }) => {
                             <img
                               src={builder
                                 .image(blog.authorImage)
-                                .width(500)
+                                .width(50)
                                 .url()}
                               className="h-10 w-10 rounded-full border-2 border-grey-70 shadow"
                               alt="author image"
@@ -80,11 +71,6 @@ const Blogs = ({ blogs, fetchedCategories }) => {
                             <span className="block pt-1 font-body text-sm font-bold text-grey-30">
                               {blog.postedAt}
                             </span>
-                            {blog.readCount && (
-                              <span className="block pt-1 font-body text-sm font-bold text-grey-30">
-                                Reads: {blog.readCount}
-                              </span>
-                            )}
                           </div>
                         </div>
                         <Link
@@ -112,32 +98,32 @@ const Blogs = ({ blogs, fetchedCategories }) => {
   );
 };
 
-export default Blogs;
+export default Category;
 
 export async function getServerSideProps(context) {
+  const { slug } = context.params;
+  const category = await client.fetch(
+    `*[_type == "category" && slug.current == $slug][0]`,
+    { slug }
+  );
+
   const blogs = await client.fetch(
-    `*[_type == "blog"] | order(postedAt desc) {
+    `*[_type == "blog" && references($categoryId)] | order(postedAt desc) {
       title,
       slug,
       metadesc,
       blogImage,
-      readCount,
       "authorName": author.author->title,
       "authorImage": author.author->image.asset,
-      postedAt,
-        }`
+      postedAt
+    }`,
+    { categoryId: category._id }
   );
-
-  const fetchedCategories = await client.fetch(`*[_type == "category"] {
-      title,
-      slug,
-      "postCount": count(*[_type == "blog" && references(^._id)])
-    }`);
 
   return {
     props: {
+      category,
       blogs,
-      fetchedCategories,
     },
   };
 }

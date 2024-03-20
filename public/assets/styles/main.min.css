@@ -304,11 +304,11 @@ textarea::placeholder {
 }
 select {
   -webkit-print-color-adjust: exact;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' strokeWidth='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
   background-size: 1.5em 1.5em;
-  color-adjust: exact;
+  print-color-adjust: exact;
   padding-right: 2.5rem;
 }
 [multiple] {
@@ -317,7 +317,7 @@ select {
   background-position: 0 0;
   background-repeat: unset;
   background-size: initial;
-  color-adjust: unset;
+  print-color-adjust: unset;
   padding-right: 0.75rem;
 }
 [type="checkbox"],
@@ -333,7 +333,7 @@ select {
   border-color: #6b7280;
   border-width: 1px;
   color: #2563eb;
-  color-adjust: exact;
+  print-color-adjust: exact;
   display: inline-block;
   flex-shrink: 0;
   height: 1rem;
@@ -391,7 +391,7 @@ select {
 }
 [type="checkbox"]:indeterminate {
   background-color: currentColor;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' strokeWidth='2' d='M4 8h8'/%3E%3C/svg%3E");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 100% 100%;

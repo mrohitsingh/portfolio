@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { client } from "./../../lib/sanity";
 import Head from "next/head";
 import Link from "next/link";
@@ -11,9 +11,10 @@ import Social from "./../../components/social";
 import { useForm, SubmitHandler } from "react-hook-form";
 import CodeBlock from "./../../components/Codeblock";
 
-const Blog = ({ blog, profile }) => {
+const Blog = ({ blog, profile, relatedPosts }) => {
   const [submitted, setSubmitted] = useState(false);
   const [scroll, setScroll] = useState(0);
+  const [toc, setToc] = useState([]);
 
   const router = useRouter();
   const {
@@ -68,9 +69,20 @@ const Blog = ({ blog, profile }) => {
         <CodeBlock
           code={props.node.code}
           language={props.node.language}
+          fileName={props.node.filename}
           {...props}
         />
       ),
+
+      customImage: ({ node }) => {
+        const { alt, asset } = node;
+        if (asset && alt) {
+          return (
+            <img src={imageUrlBuilder(client).image(asset).url()} alt={alt} />
+          );
+        }
+        return null;
+      },
     },
   };
 
@@ -152,7 +164,7 @@ const Blog = ({ blog, profile }) => {
               <div className="mx-auto max-w-4xl">
                 <div className="pt-10">
                   <div className="bg-primary text-white p-5">
-                    <h1 className="pt-5 font-body text-2xl font-semibold text-white sm:text-3xl md:text-4xl xl:text-5xl">
+                    <h1 className="block pt-5 font-body text-2xl font-semibold text-white sm:text-3xl md:text-4xl xl:text-5xl">
                       {blog.title}
                     </h1>
                     <div className="flex items-center pt-5 md:pt-10">
@@ -176,19 +188,42 @@ const Blog = ({ blog, profile }) => {
                   <img
                     src={builder.image(blog.blogImage).width(800).url()}
                     alt={blog.title}
-                    className=" ml-auto mr-auto w-full pt5"
+                    className=" ml-auto mr-auto w-full pt-2"
                   />
                   <span className="block pt-2 font-body text-lg text-grey-20">
                     {blog.metadesc}
                   </span>
                 </div>
-                <div className="prose max-w-none text-lg px-3">
-                  <BlockContent
-                    blocks={blog.content}
-                    projectId="fgjlw1up"
-                    dataset="production"
-                    serializers={serializers}
-                  />
+                <div className="flex w-full -mX-5">
+                  <div className="prose max-w-54 text-lg px-3">
+                    <BlockContent
+                      blocks={blog.content}
+                      projectId="fgjlw1up"
+                      dataset="production"
+                      serializers={serializers}
+                    />
+                  </div>
+                  {/* sidebar */}
+                  <sidebar className="sticky top-15 max-h-full h-screen">
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold mb-2">
+                        Table of Contents
+                      </h3>
+                      <ul>
+                        {toc.map((item) => (
+                          <li key={item.id}>
+                            <a
+                              href={`#${item.id}`}
+                              onClick={() => handleNavClick(item.id)}
+                              className="hover:text-primary"
+                            >
+                              {item.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </sidebar>
                 </div>
                 {/* categories */}
                 {blog.categories && blog.categories.length > 0 && (
@@ -206,26 +241,30 @@ const Blog = ({ blog, profile }) => {
                     ))}
                   </div>
                 )}
-
+                {/* Next/Previous Post */}
                 <div className="mt-10 flex justify-between border-t border-lila py-12">
-                  <Link
-                    href={"/blog/" + blog.previousPost}
-                    className="flex items-center"
-                  >
-                    <i className="bx bx-left-arrow-alt text-2xl text-primary"></i>
-                    <span className="block pl-2 font-body text-lg font-bold uppercase text-primary md:pl-5">
-                      Previous Post
-                    </span>
-                  </Link>
-                  <a
-                    href={"/blog/" + blog.nextPost}
-                    className="flex items-center"
-                  >
-                    <span className="block pr-2 font-body text-lg font-bold uppercase text-primary md:pr-5">
-                      Next Post
-                    </span>
-                    <i className="bx bx-right-arrow-alt text-2xl text-primary"></i>
-                  </a>
+                  {blog.previousPost && (
+                    <Link
+                      href={"/blog/" + blog.previousPost.slug}
+                      className="flex items-center"
+                    >
+                      <i className="bx bx-left-arrow-alt text-2xl text-primary"></i>
+                      <span className="block pl-2 font-body text-lg font-bold uppercase text-primary md:pl-5">
+                        Previous Post
+                      </span>
+                    </Link>
+                  )}
+                  {blog.previousPost && (
+                    <Link
+                      href={"/blog/" + blog.nextPost.slug}
+                      className="flex items-center"
+                    >
+                      <span className="block pr-2 font-body text-lg font-bold uppercase text-primary md:pr-5">
+                        Next Post
+                      </span>
+                      <i className="bx bx-right-arrow-alt text-2xl text-primary"></i>
+                    </Link>
+                  )}
                 </div>
 
                 {/* author start */}
@@ -241,13 +280,86 @@ const Blog = ({ blog, profile }) => {
                     <h3 className="pt-10 font-body text-xl font-bold text-secondary md:pt-0">
                       {blog.authorName}
                     </h3>
-                    <p className="pt-5 font-body text-sm leading-8 text-secondary sm:leading-9 md:text-sm md:leading-9 lg:leading-9 xl:leading-9">
+                    <p className="pt-5 font-body text-sm leading-8 text-secondary text-justify sm:leading-9 md:text-sm md:leading-9 lg:leading-9 xl:leading-9">
                       {blog.authorAbout}
                     </p>
                     <Social profile={profile} />
                   </div>
                 </div>
+                <hr className="border-lila my-5" />
                 {/* author end */}
+
+                {/* Related Posts Start */}
+                <div className="container mx-auto">
+                  <h2 className="text-center font-header text-2xl font-semibold uppercase text-primary sm:text-3xl lg:text-4xl">
+                    Related Posts
+                  </h2>
+                  <div className="mx-auto grid w-full grid-cols-1 gap-6 pt-12 sm:w-3/4 md:w-full md:grid-cols-2 lg:w-full lg:grid-cols-3 xl:gap-10  rounded-3xl">
+                    {relatedPosts.map((relatedPost) => {
+                      return (
+                        <div key={relatedPost.slug.current}>
+                          <div className="group relative h-64 bg-cover bg-center bg-no-repeat sm:h-72 lg:h-48 xl:h-64 rounded-t-2xl">
+                            <img
+                              src={
+                                builder
+                                  .image(relatedPost.blogImage)
+                                  .width(700)
+                                  .url() || "/assets/img/post-01.png"
+                              }
+                              alt={relatedPost.title}
+                              className="group relative h-64 bg-cover bg-center bg-no-repeat sm:h-72 lg:h-48 xl:h-64 rounded-t-2xl"
+                            />
+                            <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50 rounded-t-2xl"></span>
+                            <Link
+                              key={relatedPost.slug.current}
+                              href={"/blog/" + relatedPost.slug.current}
+                              className="shadow"
+                            >
+                              <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-primary bg-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-primary md:text-base cursor-pointer hover:bg-primary hover:border-white hover:text-white">
+                                Read More
+                              </span>
+                            </Link>
+                          </div>
+                          <div className="bg-white py-6 px-5 xl:py-8 rounded-b-2xl">
+                            <div className="flex items-center justify-between pb-5">
+                              <div>
+                                <img
+                                  src={builder
+                                    .image(relatedPost.authorImage)
+                                    .width(50)
+                                    .url()}
+                                  className="h-10 w-10 rounded-full border-2 border-grey-70 shadow"
+                                  alt="author image"
+                                />
+                              </div>
+                              <div className="pl-5">
+                                <span className="block font-body text-sm font-bold text-grey-30">
+                                  {relatedPost.authorName}
+                                </span>
+                                <span className="block pt-1 font-body text-sm font-bold text-grey-30">
+                                  {relatedPost.postedAt}
+                                </span>
+                              </div>
+                            </div>
+                            <Link
+                              key={relatedPost.slug.current}
+                              href={"/blog/" + relatedPost.slug.current}
+                              className="shadow"
+                            >
+                              <span className="block font-body text-lg font-semibold text-black cursor-pointer hover:text-primary">
+                                {relatedPost.title}
+                              </span>
+                            </Link>
+                            <span className="block pt-2 font-body text-grey-20 line-clamp-3">
+                              {relatedPost.metadesc}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* Related Posts End */}
 
                 {/* comment form start */}
                 {submitted ? (
@@ -389,10 +501,10 @@ export const getServerSideProps = async (context) => {
     "categories": categories[]->title,
     "authorAbout": author.author->about,
     "comments": *[_type == "comment" && blog._ref == ^._id && approved == true] | order(_createdAt desc),
-    "previousPost": *[_type == "blog" && ^.publicReleaseDate > publicReleaseDate]|order(publicReleaseDate desc)[0]{
+    "previousPost": *[_type == "blog" && ^.postedAt > postedAt]|order(postedAt desc)[0]{
       "slug": slug.current,
       },
-    "nextPost": *[_type == "blog" && ^.publicReleaseDate > publicReleaseDate]|order(publicReleaseDate asc)[0]{
+    "nextPost": *[_type == "blog" && ^.postedAt > postedAt]|order(postedAt asc)[0]{
       "slug": slug.current
       },
   }`;
@@ -401,10 +513,25 @@ export const getServerSideProps = async (context) => {
   const profileQuery = `*[_type == "profile"][0]`;
   const profile = await client.fetch(profileQuery);
 
+  const categories = blog.categories || [];
+
+  const relatedPostsQuery = `*[_type == "blog" && _id != '${blog._id}' && references(*[_type == "category" && title in $categories]._id)] | order(postedAt desc)[0..2] {
+    _id,
+    title,
+    slug,
+    metadesc,
+    blogImage,
+    "authorName": author.author->title,
+    "authorImage": author.author->image.asset,
+    postedAt,
+  }`;
+  const relatedPosts = await client.fetch(relatedPostsQuery, { categories });
+
   return {
     props: {
       blog,
       profile,
+      relatedPosts,
     },
   };
 };
