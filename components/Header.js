@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Header = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  const menuItems = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/services", label: "Services" },
+    { href: "/portfolio", label: "Portfolio" },
+    { href: "/blogs", label: "Blog" },
+    { href: "/contact", label: "Contact" },
+  ];
+
+  const isActive = (href) => {
+    return router.pathname === href ? "text-yellow" : "";
+  };
+  const isActiveBg = (href) => {
+    return router.pathname === href ? "bg-yellow" : "";
+  };
+
   return (
     <div className="">
       <div className="fixed w-full z-50 top-0 py-2 sm:py-3 bg-gradient-to-r from-hero-gradient-from to-hero-gradient-to">
@@ -26,17 +45,34 @@ const Header = () => {
                   : "top-[-490px]"
               } md:opacity-100 lg:opacity-100`}
             >
-              <li className=" lg:pl-6 md:pl-6 md:ml-8 text-xl md:my-0 my-5">
-                <span className="group cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  <Link href="/" onClick={() => setOpen(!open)}>
-                    Home
-                  </Link>
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </span>
-              </li>
+              {menuItems.map((item, index) => (
+                <li
+                  className=" lg:pl-6 md:pl-6 md:ml-8 text-xl md:my-0 my-5"
+                  key={index}
+                >
+                  <span
+                    className={`group cursor-pointer pt-0.5 font-header font-semibold uppercase text-white ${isActive(
+                      item.href
+                    )}`}
+                  >
+                    <Link href={item.href} onClick={() => setOpen(!open)}>
+                      {item.label}
+                    </Link>
+                    <span
+                      className={`block h-0.5 w-full bg-transparent group-hover:bg-yellow ${isActiveBg(
+                        item.href
+                      )}`}
+                    ></span>
+                  </span>
+                </li>
+              ))}
 
-              <li className="group lg:pl-0 md:pl-0 md:ml-8 text-xl md:my-0 my-5">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
+              {/* <li className="group lg:pl-0 md:pl-0 md:ml-8 text-xl md:my-0 my-5">
+                <span
+                  className={`cursor-pointer pt-0.5 font-header font-semibold uppercase text-white  ${isActive(
+                    "/about"
+                  )}`}
+                >
                   <Link href="/about" onClick={() => setOpen(!open)}>
                     About
                   </Link>
@@ -46,7 +82,11 @@ const Header = () => {
               </li>
 
               <li className="group lg:pl-0 md:pl-0 md:ml-8 text-xl md:my-0 my-5">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
+                <span
+                  className={`cursor-pointer pt-0.5 font-header font-semibold uppercase text-white ${isActive(
+                    "/services"
+                  )}`}
+                >
                   <Link href="/services" onClick={() => setOpen(!open)}>
                     Services
                   </Link>
@@ -56,7 +96,11 @@ const Header = () => {
               </li>
 
               <li className="group lg:pl-0 md:pl-0 md:ml-8 text-xl md:my-0 my-5">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
+                <span
+                  className={`cursor-pointer pt-0.5 font-header font-semibold uppercase text-white ${isActive(
+                    "/portfolio"
+                  )}`}
+                >
                   <Link href="/portfolio" onClick={() => setOpen(!open)}>
                     Portfolio
                   </Link>
@@ -66,7 +110,11 @@ const Header = () => {
               </li>
 
               <li className="group lg:pl-0 md:pl-0 md:ml-8 text-xl md:my-0 my-5">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
+                <span
+                  className={`cursor-pointer pt-0.5 font-header font-semibold uppercase text-white ${isActive(
+                    "/blogs"
+                  )}`}
+                >
                   <Link href={"/blogs"} onClick={() => setOpen(!open)}>
                     Blog
                   </Link>
@@ -76,14 +124,18 @@ const Header = () => {
               </li>
 
               <li className="group lg:pl-0 md:pl-0 md:ml-8 text-xl md:my-0 my-5">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
+                <span
+                  className={`cursor-pointer pt-0.5 font-header font-semibold uppercase text-white ${isActive(
+                    "/contact"
+                  )}`}
+                >
                   <Link href="/contact" onClick={() => setOpen(!open)}>
                     Contact
                   </Link>
                 </span>
 
                 <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="block lg:hidden">

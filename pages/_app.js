@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import "../styles/loader.css";
 import "../styles/Home.module.css";
+import "../public/assets/styles/main.min.css";
 import Script from "next/script";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
@@ -60,7 +61,10 @@ export default function App({ Component, pageProps }) {
           name="viewport"
         />
 
-<meta name="google-site-verification" content="AHx2yz-SrQCSUupLJgIUJCMOM1frV_uRhHPzZ996qzE" />
+        <meta
+          name="google-site-verification"
+          content="AHx2yz-SrQCSUupLJgIUJCMOM1frV_uRhHPzZ996qzE"
+        />
         <meta name="theme-color" content="#5540af" />
 
         <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
@@ -100,34 +104,14 @@ export default function App({ Component, pageProps }) {
 
         <meta name="twitter:image" content="/assets/img/social.png" />
 
-        <link
-          crossOrigin="crossorigin"
-          href="https://fonts.gstatic.com"
-          rel="preconnect"
-        />
+        
 
-        <link
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@400;500;600;700&display=swap"
-          rel="preload"
-        />
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-
-        <link
-          href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
-          rel="stylesheet"
-        />
-
-        <link
+        {/* <link
           crossOrigin="anonymous"
           href="/assets/styles/main.min.css"
           media="screen"
           rel="stylesheet"
-        />
+        /> */}
 
         <meta
           name="google-site-verification"
