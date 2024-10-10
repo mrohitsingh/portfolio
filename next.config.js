@@ -22,7 +22,7 @@ const nextConfig = {
       },
       {
         source: '/pages/:slug*', // Your custom path format
-        destination: '_next/static/chunks/pages/:slug*', // The original path where the file is actually located
+        destination: '/_next/static/chunks/pages/:slug*', // The original path where the file is actually located
       },
     ];
   },
