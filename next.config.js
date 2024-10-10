@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: ["cdn.sanity.io"],
   },
+  assetPrefix: 'https://mrohitsingh.in/',
   reactStrictMode: true,
 };
 
